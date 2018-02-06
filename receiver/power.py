@@ -12,7 +12,7 @@ import datetime
 
 # Init Unicorn
 unicorn.set_layout(unicorn.AUTO)
-unicorn.rotation(0)
+unicorn.rotation(270)
 unicorn.brightness(0.2)
 width,height=unicorn.get_shape()
 
@@ -34,12 +34,13 @@ def _get_pixel_count(db):
 
 def _display_unicorn(db):
     # turn db into % and display in unicorn
-    min = 46
+    print(db)
     percent = round((1 - ((db*-1) / min)) * 100)
+    print(percent)
     white = percent
     if percent > 50:
         red = 255
-        white = percent - (percent % 5)
+        white = percent - 50
     else:
         red=0
     # set red column
@@ -47,14 +48,13 @@ def _display_unicorn(db):
         unicorn.set_pixel(0, x, red, 0, 0)
 
     cur_pixel = 0
-    for x in range(height):
-        for y in range(1, width):
+    for y in range(height):
+        for x in range(1, width):
             if cur_pixel < white:
                 unicorn.set_pixel(x, y, 255, 255, 255)
             else:
-                unicorn.set_pixel(x,y,0,0,0)
+                break
             cur_pixel = cur_pixel + 1
-
 
 
 
@@ -65,5 +65,5 @@ while True:
     print 'relative power: %0.1f dB' % (10*log10(var(samples)))
     with open('power.log', 'ab') as f:
         f.write("[{}] {} dB\n".format(datetime.datetime.now(),  (10*log10(var(samples)))))
-    _display_unicorn(db)
+    _display_unicorn(float(db))
     unicorn.show()
