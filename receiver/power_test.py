@@ -41,6 +41,6 @@ def _display_unicorn(db):
 while True:
     for db in range(min, 0, -1):
         unicorn.clear()
-        _display_unicorn(db*-1)
+        _display_unicorn(float(db*-1))
         unicorn.show()
         time.sleep(0.5)
