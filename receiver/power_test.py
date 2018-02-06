@@ -30,8 +30,8 @@ def _display_unicorn(db):
         unicorn.set_pixel(0, x, red, 0, 0)
 
     cur_pixel = 0
-    for x in range(1, width):
-        for y in range(height):
+    for y in range(height):
+        for x in range(1, width):
             if cur_pixel < white:
                 unicorn.set_pixel(x, y, 255, 255, 255)
             else:
