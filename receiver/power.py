@@ -6,6 +6,10 @@ import unicornhat as unicorn
 import os
 import datetime
 
+# Radio test script for Ghost Hunt Hackday
+# Written by Brian Maher 31/1/2018
+# Modified by Elliott Hall
+
 # Init Unicorn
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)
@@ -27,6 +31,12 @@ def _get_pixel_count(db):
     db = int(db)
     count = count + db
     return count
+
+def _display_unicorn(db):
+    # turn db into % and display in unicorn
+    min = 46
+    percent = (1 - ((db*-1) / min)) * 100
+    # Over 50 add red line
 
 while True:
     samples = sdr.read_samples(500e3)
