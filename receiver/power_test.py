@@ -22,7 +22,7 @@ def _display_unicorn(db):
     white = percent
     if percent > 50:
         red = 255
-        white = percent - (percent % 5)
+        white = percent - 50
     else:
         red=0
     # set red column
