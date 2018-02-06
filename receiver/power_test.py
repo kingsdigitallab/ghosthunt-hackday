@@ -1,6 +1,7 @@
 import unicornhat as unicorn
 import os
 import datetime
+import time
 
 #unicorn hat light test
 
@@ -9,10 +10,12 @@ unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)
 unicorn.brightness(0.2)
 width,height=unicorn.get_shape()
+# minimum db signal
+min = 46
 
 def _display_unicorn(db):
     # turn db into % and display in unicorn
-    min = 46
+
     percent = round((1 - ((db*-1) / min)) * 100)
     white = percent
     if percent > 50:
@@ -34,6 +37,8 @@ def _display_unicorn(db):
             cur_pixel = cur_pixel + 1
 
 while True:
-    db = -23
-    _display_unicorn(db)
-    unicorn.show()
+    for db in range(min, 0, -1):
+        print (db)
+        _display_unicorn(db*-1)
+        unicorn.show()
+        time.sleep(0.5)
