@@ -15,8 +15,9 @@ min = 46
 
 def _display_unicorn(db):
     # turn db into % and display in unicorn
-
+    print(db)
     percent = round((1 - ((db*-1) / min)) * 100)
+    print(percent)
     white = percent
     if percent > 50:
         red = 255
@@ -33,12 +34,13 @@ def _display_unicorn(db):
             if cur_pixel < white:
                 unicorn.set_pixel(x, y, 255, 255, 255)
             else:
-                unicorn.set_pixel(x,y,0,0,0)
+                break
             cur_pixel = cur_pixel + 1
+
 
 while True:
     for db in range(min, 0, -1):
-        print (db)
+        unicorn.clear()
         _display_unicorn(db*-1)
         unicorn.show()
         time.sleep(0.5)
