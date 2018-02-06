@@ -35,22 +35,34 @@ def _get_pixel_count(db):
 def _display_unicorn(db):
     # turn db into % and display in unicorn
     min = 46
-    percent = (1 - ((db*-1) / min)) * 100
-    # Over 50 add red line
+    percent = round((1 - ((db*-1) / min)) * 100)
+    white = percent
+    if percent > 50:
+        red = 255
+        white = percent - (percent % 5)
+    else:
+        red=0
+    # set red column
+    for x in range(height):
+        unicorn.set_pixel(0, x, red, 0, 0)
+
+    cur_pixel = 0
+    for x in range(height):
+        for y in range(1, width):
+            if cur_pixel < white:
+                unicorn.set_pixel(x, y, 255, 255, 255)
+            else:
+                unicorn.set_pixel(x,y,0,0,0)
+            cur_pixel = cur_pixel + 1
+    unicorn.show()
+
+
 
 while True:
+    unicorn.clear()
     samples = sdr.read_samples(500e3)
     db = 10*log10(var(samples))
     print 'relative power: %0.1f dB' % (10*log10(var(samples)))
     with open('power.log', 'ab') as f:
         f.write("[{}] {} dB\n".format(datetime.datetime.now(),  (10*log10(var(samples)))))
-    num_pixels = _get_pixel_count(db)
-    cur_pixel = 0
-    for x in range(height):
-        for y in range(width):
-            if cur_pixel < num_pixels:
-                unicorn.set_pixel(x,y,0,255,0)
-            else:
-                unicorn.set_pixel(x,y,0,0,0) 
-            cur_pixel = cur_pixel + 1
-            unicorn.show()
+    _display_unicorn(db)
