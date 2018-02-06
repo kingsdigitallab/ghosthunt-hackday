@@ -7,7 +7,8 @@ import time
 
 # Init Unicorn
 unicorn.set_layout(unicorn.AUTO)
-unicorn.rotation(0)
+# hold portrat style with usbs at bottom
+unicorn.rotation(270)
 unicorn.brightness(0.2)
 width,height=unicorn.get_shape()
 # minimum db signal
@@ -29,8 +30,8 @@ def _display_unicorn(db):
         unicorn.set_pixel(0, x, red, 0, 0)
 
     cur_pixel = 0
-    for x in range(height):
-        for y in range(1, width):
+    for x in range(1, width):
+        for y in range(height):
             if cur_pixel < white:
                 unicorn.set_pixel(x, y, 255, 255, 255)
             else:
